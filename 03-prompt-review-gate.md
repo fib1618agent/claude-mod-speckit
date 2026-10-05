@@ -93,14 +93,14 @@ Contextual **review card** only (no permanent panel, no nav row):
 ## 9. Commands
 
 - `/sdd-run <phase>` — explicit review-and-run entry (also the supported fallback if Spike C is negative).
-- `/sdd-review` — text fallback for the review card/last review (and opens ③ if Spike F permits).
+- `/sdd-review` — text fallback for the review card/last review (and opens ③ if Spike F permits). Subcommands `run`, `edit`, `cancel` and `save` are approval-class: they require a human origin (composer or bridge). A program-origin invocation (`-p`, SDK, another plugin) is refused and nothing runs (fail closed).
 
 ## 10. Actions
 
 | Action | Behavior |
 |---|---|
-| Edit Prompt | Edits the **execution copy** only (per-run copy; owned here), using the editing mechanism defined in `02` §8. The terminal `Input` is single-line (verified), so the supported editing path is `$.prompt.fill` of the execution copy into the Claude composer; submitting the edited text is treated as a *new* review request (never an auto-run). Editing never runs the prompt. |
-| Run | The only action that continues execution. Blocked when `06` reports the target phase gate `BLOCKED` (reason shown). |
+| Edit Prompt | Edits the **execution copy** only (per-run copy; owned here), using the editing mechanism defined in `02` §8. The terminal `Input` is single-line (verified), so the supported editing path is `$.prompt.fill` of the execution copy into the Claude composer; the edited copy is captured into the **existing pending review** (carried by the marker `sdd-review-edit:<id>`), not a new review; Run is then still required (never an auto-run). Editing never runs the prompt. |
+| Run | The only action that continues execution. Blocked when `06` reports the target phase gate `BLOCKED` or `NOT_READY` (reason shown). |
 | Cancel | Ends the review; nothing runs; `review.state = cancelled`. |
 | Save Template | Requests a persistent save by `02` (explicit confirmation there). |
 
@@ -110,7 +110,7 @@ Contextual **review card** only (no permanent panel, no nav row):
 - **Only Run continues.** Never auto-run after editing; editing then Run still requires pressing Run; Edit then Cancel runs nothing.
 - **Re-entry protection:** the Mod's own approved submission carries plugin origin and MUST pass straight through the interception without re-review. Nested or duplicate invocations while a review for the same phase is `pending` are rejected or coalesced with a message (no second pending review).
 - **Plugin-origin protection:** prompts originating from other plugins/notifications are not intercepted unless they are a supported phase request; unrelated Claude Code commands are never intercepted.
-- **Quality-gate check:** before enabling Run, read `quality`; `BLOCKED` blocks Run (for example a configured `analyze-required-before-implement` with a BLOCKER finding). `03` reads; `06` decides.
+- **Quality-gate check:** before enabling Run, read `quality`; `BLOCKED` or `NOT_READY` blocks Run (for example a configured `analyze-required-before-implement` with a BLOCKER finding). `03` reads; `06` decides.
 - **Approval fallback:** if the review card cannot be drawn, ask via `$.ui.ask` with explicit labels. If `$.ui.ask` rejects (for example `-p`, nobody to ask), **fail closed**: no approval, no run.
 - Never modify project files while previewing. Never execute a destructive phase merely to preview it.
 - Review mode disabled → normal Spec-Kit behavior is restored (no interception).

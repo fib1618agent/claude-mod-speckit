@@ -44,7 +44,8 @@ Owned noun `promptResolution` (plugin `sdd-prompt-manager`, key `promptResolutio
   templateId,
   version,
   hash,
-  layers[]
+  layers[],
+  composed?   // session-only, bounded: the composed text handed to `03`; never written to disk or `$.store`
 }
 ```
 
@@ -79,6 +80,9 @@ Contextual views, no permanent panel, no navigation row:
 - `/sdd-prompt edit <phase>`
 - `/sdd-prompt reset <phase>`
 - `/sdd-prompt save <phase>`
+- `/sdd-prompt seed` — seed the Pack templates (see §10).
+- `/sdd-prompt discard` — discard unsaved edit drafts.
+- `/sdd-prompt resolve <requestId> <phase> [args]` — internal contract used by `03`; not a user-facing command.
 
 ## 10. Actions
 

@@ -320,7 +320,7 @@ A capability that wants the user taken to another view (for example `04` → ③
 
 ### 13.7 Contract references
 
-Types come from each owner's `types/index.d.ts`; the Navigator declares only `navigator.view`. There is no `sdd-contracts` plugin (decision Q1). Consumers reference the owner's contract; no declaration is copied. A consumer lists the owner under `dependencies` for types only; absence of the owner at run time yields "unavailable" behavior, never an error.
+Types come from each owner's `types/index.d.ts`; the Navigator declares only `navigator.view`. There is no `sdd-contracts` plugin (decision Q1). Consumers reference the owner's contract; no declaration is copied. A consumer does **not** declare `dependencies` in `plugin.json`; soft edges stay soft, and types are resolved through the workspace tsconfig. Absence of the owner at run time yields "unavailable" behavior, never an error.
 
 ---
 

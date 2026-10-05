@@ -46,7 +46,7 @@ Evaluated in order, first match wins, each result a *recommendation with an owne
 ## 6. Contracts
 
 - Owned: `control` (`types/index.d.ts`, plugin `sdd-control-plane`). Consumer: `00`. `09` observes.
-- Consumed: every noun in §3 (read-only), owned by the Mods named in their specs. No declaration is copied; `10` lists owners under `dependencies` for types.
+- Consumed: every noun in §3 (read-only), owned by the Mods named in their specs. No declaration is copied; `10` declares no `dependencies` in `plugin.json`; owner types resolve through the workspace tsconfig and absence yields "unavailable".
 
 ## 7. Dependencies
 

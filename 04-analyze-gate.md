@@ -106,10 +106,10 @@ Findings   BLOCKER n  HIGH n  MEDIUM n  LOW n  INFO n
 While an Analyze run is active, deny mutating tool calls through the supported `tool.call` hook (`{ deny }`) for: **Write**, **Edit** (and notebook edits), and **mutating Bash operations**.
 
 - **Best-effort, not an absolute security boundary.** Bash mutation detection is heuristic; the specification MUST label it so and tests must not claim otherwise.
-- **Arming without a state cycle:** `04` arms the guard from its own `run = requested` plus the next plugin-origin prompt submission it observes at `prompt.submit` (the one `03` submits after approval); disarms at `turn.complete` (or when a user-origin prompt supersedes a never-approved request). `04` does not read `review`.
+- **Arming without a state cycle:** `04` arms the guard from the next plugin-origin prompt submission it observes at `prompt.submit` (the one `03` submits after approval), recognised by its `sdd-prompt-review` origin and a header phase of `analyze`; disarms at `turn.complete` (or when a user-origin prompt supersedes a never-approved request). `04` does not read `review`.
 - **Runtime-verified (Spike G):** a `prompt.submit` hook in one plugin observes another plugin's `$.prompt.submit` with `origin.kind = "plugin"` and `origin.name = <submitting plugin>`. The submitting plugin's **own** hooks are skipped.
 - **Mandatory architectural constraint: `03` Review Gate ≠ `04` Analyze.** They MUST remain separate plugins. If they were one plugin, the plugin-origin submission would bypass its own `prompt.submit` hooks and the guard could not arm from it. `04` never owns approval, prompt review or phase interception; it only observes the approved submission. Do not merge them.
-- `04` arms only for a plugin-origin submission whose `origin.name` is the Review Gate's plugin name (`sdd-prompt-review`) while `run = requested`; any other origin never arms the guard.
+- `04` arms only for a plugin-origin submission whose `origin.name` is the Review Gate's plugin name (`sdd-prompt-review`) and whose header phase is `analyze`, on any such submission and not only while `run = requested`; any other origin or phase never arms the guard.
 - Do not "fix" findings automatically. The user decides whether to modify spec, plan, tasks or implementation (edits happen outside Analyze, under normal approval).
 - Analyze requests never silently become Analyze execution (`08`/`10` only *request*).
 
