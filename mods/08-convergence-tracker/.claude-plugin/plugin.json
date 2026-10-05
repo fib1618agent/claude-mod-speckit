@@ -1,0 +1,6 @@
+{
+  "name": "sdd-convergence-tracker",
+  "version": "0.1.0",
+  "description": "SDD capability 08: evidence-based convergence state, regressions and recorded exceptions. Requests re-analysis through the Review Gate.",
+  "types": "./types/index.d.ts"
+}

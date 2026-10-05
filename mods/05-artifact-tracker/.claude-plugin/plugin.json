@@ -1,0 +1,6 @@
+{
+  "name": "sdd-artifact-tracker",
+  "version": "0.1.0",
+  "description": "SDD capability 05: canonical Spec-Kit artifact inventory, hashes and the single staleness model.",
+  "types": "./types/index.d.ts"
+}

@@ -1,0 +1,6 @@
+{
+  "name": "sdd-navigator",
+  "version": "0.1.0",
+  "description": "SDD capability UI shell: /sdd, navigation row, view slot, Back/Close and the single status line. Contains no capability business logic.",
+  "types": "./types/index.d.ts"
+}

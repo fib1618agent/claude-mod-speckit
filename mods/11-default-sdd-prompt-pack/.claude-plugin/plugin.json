@@ -1,0 +1,5 @@
+{
+  "name": "sdd-default-prompt-pack",
+  "version": "0.1.0",
+  "description": "SDD capability 11: CONTENT ONLY. Default editable engineering-quality prompt templates for Spec-Kit phases. No hooks, no state, no UI."
+}

@@ -1,0 +1,6 @@
+{
+  "name": "sdd-session-history",
+  "version": "0.1.0",
+  "description": "SDD capability 09: bounded, project-keyed history of SDD actions. An observer; never writes another Mod's state.",
+  "types": "./types/index.d.ts"
+}

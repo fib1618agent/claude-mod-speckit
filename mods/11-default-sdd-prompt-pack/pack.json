@@ -1,0 +1,16 @@
+{
+  "pack": "sdd-default-prompt-pack",
+  "version": "1",
+  "note": "Metadata consumed by 02 Prompt Manager. Content only; the Pack owns no state, UI, editing, saving or approval.",
+  "templates": [
+    { "phase": "constitution", "file": "prompts/constitution.md", "version": "1", "access": "modifies-files" },
+    { "phase": "specify", "file": "prompts/specify.md", "version": "1", "access": "modifies-files" },
+    { "phase": "clarify", "file": "prompts/clarify.md", "version": "1", "access": "modifies-files" },
+    { "phase": "plan", "file": "prompts/plan.md", "version": "1", "access": "modifies-files" },
+    { "phase": "checklist", "file": "prompts/checklist.md", "version": "1", "access": "modifies-files" },
+    { "phase": "tasks", "file": "prompts/tasks.md", "version": "1", "access": "modifies-files" },
+    { "phase": "analyze", "file": "prompts/analyze.md", "version": "1", "access": "read-only" },
+    { "phase": "implement", "file": "prompts/implement.md", "version": "1", "access": "modifies-files" },
+    { "phase": "converge", "file": "prompts/converge.md", "version": "1", "access": "read-only" }
+  ]
+}

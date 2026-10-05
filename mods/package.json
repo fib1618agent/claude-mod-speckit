@@ -1,0 +1,15 @@
+{
+  "name": "sdd-mods",
+  "private": true,
+  "description": "Spec-Kit SDD Claude Code Mods (workspace for tooling only; each Mod is its own plugin folder)",
+  "scripts": {
+    "sync": "node scripts/sync-shared.mjs",
+    "sync:check": "node scripts/sync-shared.mjs --check",
+    "typecheck": "node scripts/each-plugin.mjs tsc",
+    "validate": "node scripts/each-plugin.mjs validate",
+    "test": "node scripts/each-plugin.mjs test"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
+}

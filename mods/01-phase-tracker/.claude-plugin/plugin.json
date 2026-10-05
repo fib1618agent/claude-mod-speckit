@@ -1,0 +1,6 @@
+{
+  "name": "sdd-phase-tracker",
+  "version": "0.1.0",
+  "description": "SDD capability 01: phase determination, progress and transitions, derived from the 05 artifact inventory.",
+  "types": "./types/index.d.ts"
+}
