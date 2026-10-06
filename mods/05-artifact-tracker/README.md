@@ -2,7 +2,7 @@
 
 The Artifact Tracker builds the canonical inventory of Spec-Kit artifacts and decides when one is stale. It lists the constitution, and per feature the spec, plan, tasks, checklists and any configured implementation paths, with existence, size, modification time and a content hash. Other Mods read this inventory instead of scanning files themselves. `/sdd-artifacts` prints it; `refresh` rescans. If there is no `.specify` directory it reports that the project is not a Spec-Kit project.
 
-**Reads:** `.specify/` (including `memory/constitution.md`), `specs/<feature>/` files and `checklists/`, configured implementation directories, and `.speckit/mod/config.yaml`. Files larger than a size limit are fingerprinted by size and modification time instead of content.
+**Reads:** `.specify/` (including `memory/constitution.md` and `feature.json`, which names the active feature; without it the newest `specs/` directory is used), `specs/<feature>/` files and `checklists/`, configured implementation directories, and `.speckit/mod/config.yaml`. Files larger than a size limit are fingerprinted by size and modification time instead of content.
 
 **Stores:** the last-seen hash of each artifact, project-keyed, in the per-user plugin store (`hashes:<project fingerprint>`); hashes only, never file contents. The inventory is also kept as in-session state.
 

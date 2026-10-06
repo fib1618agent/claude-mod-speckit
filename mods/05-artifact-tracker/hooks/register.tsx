@@ -2,7 +2,7 @@ import type { Register } from 'claude-code'
 import type { Artifacts } from '../types'
 import { fingerprint, projectKey } from './shared/fingerprint'
 import { parseConfig, section, list } from './shared/config'
-import { ARTIFACT_MODEL, IMPLEMENTATION_MODEL, buildItems, formatMatrix, pickFeature, staleIds, type Fact } from './lib/inventory'
+import { ARTIFACT_MODEL, IMPLEMENTATION_MODEL, buildItems, featureFromJson, formatMatrix, pickFeature, staleIds, type Fact } from './lib/inventory'
 
 const ARTIFACTS = { plugin: 'sdd-artifact-tracker', key: 'artifacts' } as const
 const CAPABILITY = { plugin: 'sdd-artifact-tracker', key: 'capability' } as const
@@ -49,7 +49,9 @@ async function scan($: any): Promise<Artifacts> {
   const cfg = section(parseConfig(await configText($, root)), 'artifacts')
   let dirs: { name: string; mtimeMs: number }[] = []
   try { dirs = (await $.fs.list(`${root}/specs`)).filter((x: any) => x.kind === 'dir') } catch { /* no specs dir yet */ }
-  const feature = pickFeature(dirs, cfg.feature)
+  let active: string | undefined
+  try { const fp = `${root}/.specify/feature.json`; if (await $.fs.exists(fp)) active = featureFromJson(String(await $.fs.read(fp))) } catch { /* unreadable: fall back to newest */ }
+  const feature = pickFeature(dirs, cfg.feature, active)
   const facts: Record<string, Fact | undefined> = {}
   facts.constitution = await factFor($, `${root}/.specify/memory/constitution.md`)
   if (feature) {

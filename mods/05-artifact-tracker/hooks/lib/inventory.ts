@@ -15,8 +15,20 @@ export const IMPLEMENTATION_MODEL: ArtifactModel = { id: 'implementation', produ
 
 export type Fact = { path: string; status: 'present' | 'missing' | 'unreadable'; mtime: number; size: number; hash: string }
 
-export function pickFeature(dirs: { name: string; mtimeMs: number }[], override?: string): string | null {
+// Spec-Kit records the active feature in .specify/feature.json as {"feature_directory": "specs/<name>"}.
+export function featureFromJson(text: string | undefined): string | undefined {
+  if (!text) return undefined
+  try {
+    const dir = JSON.parse(text)?.feature_directory
+    if (typeof dir !== 'string') return undefined
+    return dir.replace(/\/+$/, '').replace(/^(\.\/)?specs\//, '') || undefined
+  } catch { return undefined }
+}
+
+// Precedence: config override, then .specify/feature.json (only if that directory exists), then newest by mtime.
+export function pickFeature(dirs: { name: string; mtimeMs: number }[], override?: string, active?: string): string | null {
   if (override) return override
+  if (active && dirs.some(d => d.name === active)) return active
   if (!dirs.length) return null
   const newest = [...dirs].sort((a, b) => b.mtimeMs - a.mtimeMs || a.name.localeCompare(b.name))[0]
   return newest ? newest.name : null
