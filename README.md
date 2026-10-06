@@ -42,8 +42,8 @@ Each Mod works alone through its text command. `/sdd` opens the Navigator, which
 Requires Claude Code and a Spec-Kit project (for example `specify init --integration claude`).
 
 ```bash
-# from your Spec-Kit project
-claude $(for d in /path/to/claude-mod-speckit/mods/[01]*/; do printf -- '--plugin-dir %s ' "$d"; done)
+# from your Spec-Kit project: loads all 12 Mods for this session only (nothing is installed)
+/path/to/claude-mod-speckit/mods/scripts/sdd-claude.sh
 ```
 
 Then run `/sdd`. Hotkeys in the pane: `1`–`9`, `0` and `p` open views, `b` goes Back, `Esc` closes the pane.

@@ -42,6 +42,8 @@ async function useDefaultMode($: any): Promise<void> {
   } catch { /* keep default (embedded) */ }
 }
 
+const ONE_ROW_COLUMNS = 4 + NAV.reduce((w, n) => w + n.label.length + 3, 0)
+
 function showStatus($: any, text: string): void {
   if (text === lastStatus) return
   lastStatus = text
@@ -134,6 +136,7 @@ export const register: Register = on => {
       }
     }
     const narrow = e.props.bodyColumns < 72
+    const oneRow = e.props.bodyColumns >= ONE_ROW_COLUMNS // "SDD " + every "[label]" + a space between
     const button = (n: (typeof NAV)[number]) => {
       const off = isUnavailable(cap[n.capability])
       return <Button key={'nav-' + n.id} label={off ? `[${n.label} unavailable]` : n.label} hotkey={n.key} variant={active === n.id ? 'primary' : undefined} onPress={() => select($, n.id)} />
@@ -142,7 +145,7 @@ export const register: Register = on => {
       <Box flexDirection="column">
         <Box flexDirection={narrow ? 'column' : 'row'}>
           <Text bold>SDD </Text>
-          {narrow ? NAV.map(button) : <Box flexDirection="column"><Box flexDirection="row">{NAV.slice(0, 6).map(button)}</Box><Box flexDirection="row">{NAV.slice(6).map(button)}</Box></Box>}
+          {narrow ? NAV.map(button) : oneRow ? <Box flexDirection="row">{NAV.map(button)}</Box> : <Box flexDirection="column"><Box flexDirection="row">{NAV.slice(0, 6).map(button)}</Box><Box flexDirection="row">{NAV.slice(6).map(button)}</Box></Box>}
         </Box>
         <Box flexDirection="row">
           {active ? <Button key="nav-back" label="Back" hotkey="b" onPress={() => select($, null)} /> : null}

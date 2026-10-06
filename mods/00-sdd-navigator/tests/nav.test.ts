@@ -165,3 +165,16 @@ test('the Navigator writes only its own state (no capability state, no business 
   const foreign = Object.keys(w.state).filter(k => !k.startsWith('sdd-navigator.') && !k.endsWith('.capability'))
   expect(foreign).toEqual([])
 })
+
+const rowCount = async ($: any, on: any, cols: number) => {
+  world(on)
+  const ui = await mountNav($, { ...props, bodyColumns: cols })
+  return (JSON.stringify(await ui.drawn()).match(/"flexDirection":"row"/g) ?? []).length
+}
+test('wide terminal: all eleven buttons share one row', async ($: any, on: any) => {
+  const wide = await rowCount($, on, 200)
+  expect(wide).toBe(3) // SDD+nav wrapper, one nav row, Back/Close row
+})
+test('mid-width terminal keeps the two-row nav', async ($: any, on: any) => {
+  expect(await rowCount($, on, 100)).toBe(4) // 2 nav rows + wrapper + Back/Close row
+})

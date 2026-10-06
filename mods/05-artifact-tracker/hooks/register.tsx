@@ -126,7 +126,7 @@ export const register: Register = on => {
         {!inv && <Text dimColor>No inventory yet.</Text>}
         {inv && !inv.isSpecKit && <Text dimColor>No Spec-Kit artifacts found (no .specify directory).</Text>}
         {items.map(i => (
-          <Text key={i.id}>{`${i.id.padEnd(14)} ${i.exists ? 'present' : 'missing'}  ${i.fresh === 'stale' ? 'STALE ⚠' : i.fresh === 'fresh' ? 'fresh ✓' : 'unknown ?'}  ${i.producedBy}`}</Text>
+          <Text key={i.id}>{`${i.id.padEnd(14)} ${i.exists ? 'present' : 'missing'}  ${i.fresh === 'stale' ? 'STALE ⏳' : i.fresh === 'fresh' ? 'fresh ✓' : 'unknown ?'}  ${i.producedBy}`}</Text>
         ))}
         <Button key="artifacts-refresh" label="Refresh" hotkey="r" onPress={() => refresh($)} />
       </Box>
