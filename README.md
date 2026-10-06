@@ -19,6 +19,45 @@ This repository is a set of twelve Mods that add a **Spec-Driven Development (SD
 
 *The `/sdd` Navigator with the Analyze view open: findings by severity, coverage, and read-only Analyze actions.*
 
+## Install
+
+**Requirements:** Claude Code (2.1.289 verified) and a [Spec-Kit](https://github.com/github/spec-kit) project, for example one created with `specify init --integration claude`.
+
+**1. Add the marketplace and install the Mods** (inside Claude Code):
+
+```
+/plugin marketplace add fib1618agent/claude-mod-speckit
+/plugin install sdd-navigator@sdd-mods
+/plugin install sdd-phase-tracker@sdd-mods
+/plugin install sdd-prompt-manager@sdd-mods
+/plugin install sdd-prompt-review@sdd-mods
+/plugin install sdd-analyze-gate@sdd-mods
+/plugin install sdd-artifact-tracker@sdd-mods
+/plugin install sdd-quality-gate@sdd-mods
+/plugin install sdd-traceability@sdd-mods
+/plugin install sdd-convergence-tracker@sdd-mods
+/plugin install sdd-session-history@sdd-mods
+/plugin install sdd-control-plane@sdd-mods
+/plugin install sdd-default-prompt-pack@sdd-mods
+```
+
+Install all 12 for the full experience, or any subset: each Mod works alone through its text command, and `sdd-navigator` adds the `/sdd` pane. Restart Claude Code after installing.
+
+**2. Open your Spec-Kit project** and start Claude Code there.
+
+> **Heads up:** `sdd-prompt-review` intercepts `/speckit-*` and asks for your approval first. Installed at user scope it does this in every project. Add `--scope project` to the install command to limit it to one project.
+
+**Try it without installing:** from a clone, `mods/scripts/sdd-claude.sh` launches Claude Code with all 12 Mods loaded for that session only. `mods/scripts/install-local.sh` installs them globally from a clone (`uninstall-local.sh` removes them).
+
+## Use
+
+1. Run `/sdd` to open the Navigator. Pick a view with `1`–`9`, `0` or `p`, press `b` to go Back and `Esc` to close. The status line shows the current phase.
+2. Run a Spec-Kit phase as usual, for example `/speckit-plan`, or `/sdd-run plan`. The Review Gate holds it and shows the composed prompt. Choose **Edit Prompt**, **Run** or **Cancel**. Nothing runs without your approval, and unknown or unanswerable approval fails closed.
+3. Run `/sdd-analyze` for a read-only Analyze pass. Findings are grouped by severity (BLOCKER, HIGH, MEDIUM, LOW) with coverage.
+4. Check progress with `/sdd-status`, `/sdd-artifacts`, `/sdd-trace` and `/sdd-quality`. The quality gate decides Approve, Reject and Continue, and Run is blocked while a gate is `BLOCKED` or `NOT_READY`.
+5. Track convergence with `/sdd-converge` (record an exception with `/sdd-converge except <scope> <reason>`), and review past actions with `/sdd-history`.
+6. Edit prompt templates with `/sdd-prompt` (`show`, `edit`, `reset`, `save`, `seed` for the Pack defaults).
+
 ## The Mods
 
 | # | Folder | Plugin | Role | Command |
@@ -37,34 +76,6 @@ This repository is a set of twelve Mods that add a **Spec-Driven Development (SD
 | 11 | `11-default-sdd-prompt-pack` | `sdd-default-prompt-pack` | **Content only**: nine editable prompt templates plus `pack.json`. | none |
 
 Each Mod works alone through its text command. `/sdd` opens the Navigator, which embeds the capability views. If a view fails to appear, it falls back to one pane at a time.
-
-## Install
-
-Requires Claude Code (2.1.289 verified) with Mods support, and a [Spec-Kit](https://github.com/github/spec-kit) project (for example `specify init --integration claude`).
-
-```
-/plugin marketplace add fib1618agent/claude-mod-speckit
-/plugin install sdd-navigator@sdd-mods
-```
-
-Install any or all of the 12 plugins (`sdd-navigator`, `sdd-phase-tracker`, `sdd-prompt-manager`, `sdd-prompt-review`, `sdd-analyze-gate`, `sdd-artifact-tracker`, `sdd-quality-gate`, `sdd-traceability`, `sdd-convergence-tracker`, `sdd-session-history`, `sdd-control-plane`, `sdd-default-prompt-pack`). Each works alone through its text command; install `sdd-navigator` for the `/sdd` pane. Restart Claude Code afterwards.
-
-> **Heads up:** once `sdd-prompt-review` is installed at user scope, it intercepts `/speckit-*` in every project. Install it at project scope (`--scope project`) to limit that.
-
-> **Status: v0.1, pre-release.** Unit tests and a real-engine run pass, but interactive verification is still open (see [Status](#status)).
-
-## Quick start (from a clone)
-
-```bash
-# from your Spec-Kit project: loads all 12 Mods for this session only (nothing is installed)
-/path/to/claude-mod-speckit/mods/scripts/sdd-claude.sh
-```
-
-**Session-only, not installed.** The launcher uses `--plugin-dir`, so the Mods exist only for that Claude Code session and your global setup is untouched. This is deliberate: `03` intercepts `/speckit-*` commands, so a global install would enable the Review Gate in every project. The global install below is the alternative.
-
-**Global install (optional).** `mods/scripts/install-local.sh` copies the 12 Mods into `~/.claude/local-mods/`, registers them in the `claude-mods-local` marketplace and installs them at user scope, so they load in every project. Re-run it after changing the Mods. `mods/scripts/uninstall-local.sh` removes them. Because `03` intercepts `/speckit-*`, review mode applies in every Spec-Kit project once installed.
-
-Then run `/sdd`. Hotkeys in the pane: `1`–`9`, `0` and `p` open views, `b` goes Back, `Esc` closes the pane.
 
 ## Repository layout
 
