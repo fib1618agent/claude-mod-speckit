@@ -21,7 +21,7 @@ This repository is a set of twelve Mods that add a **Spec-Driven Development (SD
 
 ## Install
 
-**Requirements:** Claude Code (2.1.289 verified) and a [Spec-Kit](https://github.com/github/spec-kit) project, for example one created with `specify init --integration claude`.
+**Requirements:** Claude Code with Mods support (2.1.289 and 2.1.291 verified; an older build such as 2.1.185 ignores these plugins and reports `Unknown command: /sdd`; check with `claude --version`) and a [Spec-Kit](https://github.com/github/spec-kit) project, for example one created with `specify init --integration claude`.
 
 **1. Add the marketplace and install the Mods** (inside Claude Code):
 
