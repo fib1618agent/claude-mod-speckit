@@ -46,6 +46,8 @@ Requires Claude Code and a Spec-Kit project (for example `specify init --integra
 /path/to/claude-mod-speckit/mods/scripts/sdd-claude.sh
 ```
 
+**Session-only, not installed.** The launcher uses `--plugin-dir`, so the Mods exist only for that Claude Code session and your global setup is untouched. This is deliberate: `03` intercepts `/speckit-*` commands, so a global install would enable the Review Gate in every project. A permanent install (for example into `~/.claude/local-mods/`) is planned once the interactive checks listed under Status pass.
+
 Then run `/sdd`. Hotkeys in the pane: `1`–`9`, `0` and `p` open views, `b` goes Back, `Esc` closes the pane.
 
 ## Repository layout
