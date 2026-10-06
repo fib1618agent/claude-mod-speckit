@@ -46,7 +46,8 @@ export function deriveConvergence(i: ConvergeInput): Convergence {
 
   const regressions: string[] = []
   // REGRESSED counts as "was good": a standing problem must keep the state REGRESSED, not flip back to CONVERGING on the next recompute.
-  const wasGood = i.previous === 'CONVERGING' || i.previous === 'CONVERGED' || i.previous === 'REGRESSED'
+  // Nothing can regress before work has started (e.g. stale state carried over a reload with no tasks done).
+  const wasGood = i.tasks.done > 0 && (i.previous === 'CONVERGING' || i.previous === 'CONVERGED' || i.previous === 'REGRESSED')
   if (wasGood && analysisStale) regressions.push('analysis is stale: artifacts changed after the last Analyze')
   if (wasGood && i.checks === 'failing') regressions.push('tests/checks are failing')
   if (wasGood && staleArtifacts.length) regressions.push(`stale artifacts: ${staleArtifacts.join(', ')}`)

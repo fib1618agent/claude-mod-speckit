@@ -127,3 +127,9 @@ test('text says NOT RUN when Analyze never ran', () => {
   expect(formatConvergence(deriveConvergence(base({ analyze: undefined })))).toContain('analysis NOT RUN')
   expect(formatConvergence(deriveConvergence(base()))).toContain('analysis current')
 })
+
+test('no REGRESSED before any task is done, even with stale carried-over state and standing gaps', () => {
+  const gaps = trace([row('FR-001', ['T001'], ['a'])], 'GAPS', [{ kind: 'orphan-task', id: 'T9', inferred: false }])
+  for (const previous of ['CONVERGING', 'CONVERGED', 'REGRESSED'] as const)
+    expect(deriveConvergence(base({ tasks: done(0, 2), previous, trace: gaps, artifacts: arts('stale') })).state).toBe('NOT_STARTED')
+})

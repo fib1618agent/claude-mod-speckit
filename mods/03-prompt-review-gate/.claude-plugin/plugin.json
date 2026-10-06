@@ -1,6 +1,6 @@
 {
   "name": "sdd-prompt-review",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "SDD capability 03: the sole phase/prompt interceptor and human approval gate before a Spec-Kit phase runs.",
   "author": {
     "name": "fib1618agent",

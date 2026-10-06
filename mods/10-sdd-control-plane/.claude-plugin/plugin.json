@@ -1,6 +1,6 @@
 {
   "name": "sdd-control-plane",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "SDD capability 10: aggregate read/delegate view, derived nextAction and configuration view. Not an orchestration engine; owns no approval.",
   "author": {
     "name": "fib1618agent",
