@@ -183,8 +183,9 @@ export const register: Register = on => {
       pending.composed = ensureHeader(edit.body, pending.phase)
       pending.edited = true
       await publish($, { phase: pending.phase, promptHash: fingerprint(pending.composed), state: 'pending', requestId: pending.requestId, path: pending.path, edited: true })
-      // Refocus the pane (deferred: $.command.run must not run inside an awaited hook) so Run / Cancel are one key away.
-      $.clock.after(0, async () => { try { await $.command.run({ command: 'sdd', args: 'review' }) } catch { /* text commands still work */ } })
+      // Best-effort refocus so Run / Cancel are one key away. Deferred ($.command.run must not run inside an awaited hook) and delayed:
+      // the host grants pane focus only over an EMPTY composer, which is cleared just after this hook returns. A request, never a grant.
+      $.clock.after(300, async () => { try { await $.command.run({ command: 'sdd', args: 'review' }) } catch { /* text commands still work */ } })
       return { drop: 'Edited copy captured, not sent. Press Run in ③ Review (focus the pane with ctrl+x then Tab) or use /sdd-review run; /sdd close closes the pane.' }
     }
     const set = await settings($)
