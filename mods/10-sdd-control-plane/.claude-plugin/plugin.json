@@ -2,5 +2,12 @@
   "name": "sdd-control-plane",
   "version": "0.1.0",
   "description": "SDD capability 10: aggregate read/delegate view, derived nextAction and configuration view. Not an orchestration engine; owns no approval.",
+  "author": {
+    "name": "fib1618agent",
+    "url": "https://github.com/fib1618agent"
+  },
+  "homepage": "https://github.com/fib1618agent/claude-mod-speckit",
+  "repository": "https://github.com/fib1618agent/claude-mod-speckit",
+  "license": "MIT",
   "types": "./types/index.d.ts"
 }

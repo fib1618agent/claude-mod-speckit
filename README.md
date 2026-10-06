@@ -6,6 +6,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6?logo=typescript&logoColor=white)
 ![Tests](https://img.shields.io/badge/tests-148%20passing-3fb950)
 ![Validate](https://img.shields.io/badge/plugin%20validate-12%2F12-3fb950)
+![License](https://img.shields.io/badge/license-MIT-blue)
 ![Status](https://img.shields.io/badge/readiness-ready%20with%20caveats-d29922)
 
 ## What is a Claude Mod?
@@ -37,9 +38,22 @@ This repository is a set of twelve Mods that add a **Spec-Driven Development (SD
 
 Each Mod works alone through its text command. `/sdd` opens the Navigator, which embeds the capability views. If a view fails to appear, it falls back to one pane at a time.
 
-## Quick start
+## Install
 
-Requires Claude Code and a Spec-Kit project (for example `specify init --integration claude`).
+Requires Claude Code (2.1.289 verified) with Mods support, and a [Spec-Kit](https://github.com/github/spec-kit) project (for example `specify init --integration claude`).
+
+```
+/plugin marketplace add fib1618agent/claude-mod-speckit
+/plugin install sdd-navigator@sdd-mods
+```
+
+Install any or all of the 12 plugins (`sdd-navigator`, `sdd-phase-tracker`, `sdd-prompt-manager`, `sdd-prompt-review`, `sdd-analyze-gate`, `sdd-artifact-tracker`, `sdd-quality-gate`, `sdd-traceability`, `sdd-convergence-tracker`, `sdd-session-history`, `sdd-control-plane`, `sdd-default-prompt-pack`). Each works alone through its text command; install `sdd-navigator` for the `/sdd` pane. Restart Claude Code afterwards.
+
+> **Heads up:** once `sdd-prompt-review` is installed at user scope, it intercepts `/speckit-*` in every project. Install it at project scope (`--scope project`) to limit that.
+
+> **Status: v0.1, pre-release.** Unit tests and a real-engine run pass, but interactive verification is still open (see [Status](#status)).
+
+## Quick start (from a clone)
 
 ```bash
 # from your Spec-Kit project: loads all 12 Mods for this session only (nothing is installed)
@@ -83,3 +97,7 @@ npm test
 ## Status
 
 Verified: `tsc` 11/11, `claude plugin validate` 12/12, 148 harness tests, and a real-engine run against a Spec-Kit 1.1.0 fixture. Not yet verified in an interactive session: plugin load order, Button `onPress` delegation, person-origin Esc and interactive `/speckit-*` routing. Open spec-wording decisions are listed in [`SESSION-HANDOFF.md`](SESSION-HANDOFF.md).
+
+## License
+
+[MIT](LICENSE) © 2026 fib1618agent

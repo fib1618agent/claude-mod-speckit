@@ -1,0 +1,109 @@
+{
+  "name": "sdd-mods",
+  "owner": {
+    "name": "fib1618agent",
+    "url": "https://github.com/fib1618agent"
+  },
+  "metadata": {
+    "description": "Spec-Driven Development Mods for Claude Code and GitHub Spec-Kit.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "sdd-navigator",
+      "source": "./mods/00-sdd-navigator",
+      "description": "SDD capability UI shell: /sdd, navigation row, view slot, Back/Close and the single status line. Contains no capability business logic.",
+      "version": "0.1.0",
+      "license": "MIT",
+      "category": "development"
+    },
+    {
+      "name": "sdd-phase-tracker",
+      "source": "./mods/01-phase-tracker",
+      "description": "SDD capability 01: phase determination, progress and transitions, derived from the 05 artifact inventory.",
+      "version": "0.1.0",
+      "license": "MIT",
+      "category": "development"
+    },
+    {
+      "name": "sdd-prompt-manager",
+      "source": "./mods/02-prompt-manager",
+      "description": "SDD capability 02: prompt templates, layer composition, prompt resolution, template edit/save/reset and the Prompt Pack catalog.",
+      "version": "0.1.0",
+      "license": "MIT",
+      "category": "development"
+    },
+    {
+      "name": "sdd-prompt-review",
+      "source": "./mods/03-prompt-review-gate",
+      "description": "SDD capability 03: the sole phase/prompt interceptor and human approval gate before a Spec-Kit phase runs.",
+      "version": "0.1.0",
+      "license": "MIT",
+      "category": "development"
+    },
+    {
+      "name": "sdd-analyze-gate",
+      "source": "./mods/04-analyze-gate",
+      "description": "SDD capability 04: semantic Analyze findings, read-only run guard (best effort), Analyze result state. Execution is delegated through the Review Gate.",
+      "version": "0.1.0",
+      "license": "MIT",
+      "category": "development"
+    },
+    {
+      "name": "sdd-artifact-tracker",
+      "source": "./mods/05-artifact-tracker",
+      "description": "SDD capability 05: canonical Spec-Kit artifact inventory, hashes and the single staleness model.",
+      "version": "0.1.0",
+      "license": "MIT",
+      "category": "development"
+    },
+    {
+      "name": "sdd-quality-gate",
+      "source": "./mods/06-quality-gate",
+      "description": "SDD capability 06: evidence-backed phase gates and the sole owner of Approve, Reject and Continue.",
+      "version": "0.1.0",
+      "license": "MIT",
+      "category": "development"
+    },
+    {
+      "name": "sdd-traceability",
+      "source": "./mods/07-traceability",
+      "description": "SDD capability 07: deterministic requirement ID graph, trace matrix, gaps and orphans.",
+      "version": "0.1.0",
+      "license": "MIT",
+      "category": "development"
+    },
+    {
+      "name": "sdd-convergence-tracker",
+      "source": "./mods/08-convergence-tracker",
+      "description": "SDD capability 08: evidence-based convergence state, regressions and recorded exceptions. Requests re-analysis through the Review Gate.",
+      "version": "0.1.0",
+      "license": "MIT",
+      "category": "development"
+    },
+    {
+      "name": "sdd-session-history",
+      "source": "./mods/09-session-history",
+      "description": "SDD capability 09: bounded, project-keyed history of SDD actions. An observer; never writes another Mod's state.",
+      "version": "0.1.0",
+      "license": "MIT",
+      "category": "development"
+    },
+    {
+      "name": "sdd-control-plane",
+      "source": "./mods/10-sdd-control-plane",
+      "description": "SDD capability 10: aggregate read/delegate view, derived nextAction and configuration view. Not an orchestration engine; owns no approval.",
+      "version": "0.1.0",
+      "license": "MIT",
+      "category": "development"
+    },
+    {
+      "name": "sdd-default-prompt-pack",
+      "source": "./mods/11-default-sdd-prompt-pack",
+      "description": "SDD capability 11: CONTENT ONLY. Default editable engineering-quality prompt templates for Spec-Kit phases. No hooks, no state, no UI.",
+      "version": "0.1.0",
+      "license": "MIT",
+      "category": "development"
+    }
+  ]
+}
