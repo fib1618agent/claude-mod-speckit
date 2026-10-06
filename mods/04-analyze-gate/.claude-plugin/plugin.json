@@ -1,6 +1,6 @@
 {
   "name": "sdd-analyze-gate",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "SDD capability 04: semantic Analyze findings, read-only run guard (best effort), Analyze result state. Execution is delegated through the Review Gate.",
   "author": {
     "name": "fib1618agent",

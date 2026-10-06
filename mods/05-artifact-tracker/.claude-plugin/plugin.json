@@ -1,6 +1,6 @@
 {
   "name": "sdd-artifact-tracker",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "SDD capability 05: canonical Spec-Kit artifact inventory, hashes and the single staleness model.",
   "author": {
     "name": "fib1618agent",

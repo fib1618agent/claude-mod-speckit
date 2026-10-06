@@ -1,6 +1,6 @@
 {
   "name": "sdd-traceability",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "SDD capability 07: deterministic requirement ID graph, trace matrix, gaps and orphans.",
   "author": {
     "name": "fib1618agent",
