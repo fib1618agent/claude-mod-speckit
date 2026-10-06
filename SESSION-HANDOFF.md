@@ -3,12 +3,9 @@
 Start the next session by reading this file, then do **"Next step"** below. Nothing else is pending that blocks it.
 
 ## Next step (agreed, start here)
-Prepare the 12 Mods for submission to Anthropic's official plugin directory.
+Per-Mod READMEs are **done** (`mods/00`…`10`, each with prose plus Reads/Stores/Sends). `claude plugin validate` passes 12/12 plus the marketplace; `sync:check`, `validate` and `npm test` pass.
 
-1. **Write a per-Mod `README.md`** for `mods/00-sdd-navigator` … `mods/10-sdd-control-plane`. Directory rule: README of **at least 40 words of prose inside each plugin folder** (words in code blocks don't count). `mods/11-default-sdd-prompt-pack` already has one. Each README: what the Mod does, its command, what it reads/stores/sends (the security scan wants disclosed behavior), requirements, link to the repo README. Be factual; use `mods/README.md`, the specs `00`–`11-*.md` and the README Mods table as sources.
-2. **Run `claude plugin validate` on each plugin** (`cd mods && npm run validate`, plus `claude plugin validate ./mods/<folder>` and `claude plugin validate .` for the marketplace), fix findings, commit, push.
-
-Then (not yet agreed, ask first): submit via the developer portal in two batches (see "Directory facts"). The submission itself is done by the user in a browser; Claude cannot do it.
+Remaining, done by the user in the portal (Claude cannot submit): submit via https://claude.ai/directory/manage in two batches (max 10 per 24 h). Batch 1: `00`–`09`. Batch 2 (next day): `10`, `11`. Nothing has been submitted yet. Before submitting, ideally run an interactive session on a real Spec-Kit project with all Mods.
 
 ## State
 - Repo: https://github.com/fib1618agent/claude-mod-speckit (public), branch `main`, clean, pushed. Last commit `0a31ea9`.
