@@ -1,6 +1,6 @@
 {
   "name": "sdd-convergence-tracker",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "SDD capability 08: evidence-based convergence state, regressions and recorded exceptions. Requests re-analysis through the Review Gate.",
   "author": {
     "name": "fib1618agent",

@@ -1,6 +1,6 @@
 {
   "name": "sdd-session-history",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "SDD capability 09: bounded, project-keyed history of SDD actions. An observer; never writes another Mod's state.",
   "author": {
     "name": "fib1618agent",
