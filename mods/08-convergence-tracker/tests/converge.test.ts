@@ -113,3 +113,17 @@ test('confirmed exception is recorded and changes no artifact', async ($: any, o
   expect(out.text).toContain('recorded'); expect(Object.keys(e.store)[0]).toMatch(/^converge:p-/)
   expect(state['sdd-convergence-tracker.convergence'].exceptions[0].scope).toBe('tests')
 })
+
+test('REGRESSED is sticky while the problem stands, and recovers when it clears (no CONVERGING/REGRESSED flapping)', () => {
+  const gaps = trace([row('FR-001', ['T001'], ['a']), row('FR-002', ['T002'], ['b'])], 'GAPS', [{ kind: 'orphan-task', id: 'T9', inferred: false }])
+  let prev: ConvergeInput['previous'] = 'CONVERGING'
+  const seen: string[] = []
+  for (let n = 0; n < 4; n++) { prev = deriveConvergence(base({ previous: prev, trace: gaps })).state; seen.push(prev) }
+  expect(seen).toEqual(['REGRESSED', 'REGRESSED', 'REGRESSED', 'REGRESSED'])
+  expect(deriveConvergence(base({ previous: 'REGRESSED' })).state).toBe('CONVERGED')
+})
+
+test('text says NOT RUN when Analyze never ran', () => {
+  expect(formatConvergence(deriveConvergence(base({ analyze: undefined })))).toContain('analysis NOT RUN')
+  expect(formatConvergence(deriveConvergence(base()))).toContain('analysis current')
+})

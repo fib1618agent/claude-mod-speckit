@@ -12,6 +12,8 @@ export type Convergence = {
   /** Additive: the evidence the state was derived from. */
   evidence: {
     requirementsSatisfied: number; requirementsTotal: number; tasksDone: number; tasksTotal: number;
+    /** False when Analyze has never produced a result. */
+    analysisRan: boolean;
     analysisStale: boolean; blockingFindings: number;
     /** Best-effort observation of test/check runs seen in this session; `unknown` when none was observed. */
     checks: 'passing' | 'failing' | 'unknown';

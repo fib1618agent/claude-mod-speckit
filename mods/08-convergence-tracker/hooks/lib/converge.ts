@@ -45,7 +45,8 @@ export function deriveConvergence(i: ConvergeInput): Convergence {
   const staleArtifacts = i.artifacts ? i.artifacts.items.filter(x => x.fresh === 'stale').map(x => x.id) : []
 
   const regressions: string[] = []
-  const wasGood = i.previous === 'CONVERGING' || i.previous === 'CONVERGED'
+  // REGRESSED counts as "was good": a standing problem must keep the state REGRESSED, not flip back to CONVERGING on the next recompute.
+  const wasGood = i.previous === 'CONVERGING' || i.previous === 'CONVERGED' || i.previous === 'REGRESSED'
   if (wasGood && analysisStale) regressions.push('analysis is stale: artifacts changed after the last Analyze')
   if (wasGood && i.checks === 'failing') regressions.push('tests/checks are failing')
   if (wasGood && staleArtifacts.length) regressions.push(`stale artifacts: ${staleArtifacts.join(', ')}`)
@@ -69,7 +70,7 @@ export function deriveConvergence(i: ConvergeInput): Convergence {
 
   return {
     state, regressions, exceptions: i.exceptions, at: i.at,
-    evidence: { requirementsSatisfied: satisfied.length, requirementsTotal: rows.length, tasksDone: i.tasks.done, tasksTotal: i.tasks.total, analysisStale, blockingFindings: blocking, checks: i.checks, doneWithoutEvidence },
+    evidence: { requirementsSatisfied: satisfied.length, requirementsTotal: rows.length, tasksDone: i.tasks.done, tasksTotal: i.tasks.total, analysisRan: !!i.analyze, analysisStale, blockingFindings: blocking, checks: i.checks, doneWithoutEvidence },
   }
 }
 
@@ -89,7 +90,7 @@ export function formatConvergence(c: Convergence | undefined): string {
   const e = c.evidence
   return [
     `Convergence: ${c.state}`,
-    `requirements satisfied ${e.requirementsSatisfied}/${e.requirementsTotal} · tasks done ${e.tasksDone}/${e.tasksTotal} · checks ${e.checks} · outstanding BLOCKER findings ${e.blockingFindings} · analysis ${e.analysisStale ? 'STALE' : 'current'}`,
+    `requirements satisfied ${e.requirementsSatisfied}/${e.requirementsTotal} · tasks done ${e.tasksDone}/${e.tasksTotal} · checks ${e.checks} · outstanding BLOCKER findings ${e.blockingFindings} · analysis ${!e.analysisRan ? 'NOT RUN' : e.analysisStale ? 'STALE' : 'current'}`,
     ...(e.doneWithoutEvidence.length ? [`Done but without test evidence: ${e.doneWithoutEvidence.join(', ')}`] : []),
     ...(c.regressions.length ? ['Regressions:', ...c.regressions.map(r => '  - ' + r)] : []),
     ...(c.exceptions.length ? ['Exceptions (recorded, user-approved):', ...c.exceptions.map(x => `  - ${x.scope}: ${x.reason}`)] : []),

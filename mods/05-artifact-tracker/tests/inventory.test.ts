@@ -1,5 +1,5 @@
 import { test, expect } from 'claude-code/testing'
-import { ARTIFACT_MODEL, IMPLEMENTATION_MODEL, buildItems, formatMatrix, freshness, pickFeature, staleIds, type Fact } from '../hooks/lib/inventory'
+import { ARTIFACT_MODEL, IMPLEMENTATION_MODEL, buildItems, formatMatrix, featureFromJson, freshness, pickFeature, staleIds, type Fact } from '../hooks/lib/inventory'
 
 const f = (path: string, mtime: number, hash = 'h' + mtime, status: Fact['status'] = 'present'): Fact => ({ path, status, mtime, size: 10, hash })
 const byId = (items: ReturnType<typeof buildItems>, id: string) => items.find(i => i.id === id)!
@@ -57,6 +57,17 @@ test('multiple feature directories: newest wins, override wins over newest', () 
   expect(pickFeature(dirs)).toBe('002-b')
   expect(pickFeature(dirs, '001-a')).toBe('001-a')
   expect(pickFeature([])).toBe(null)
+})
+
+test('feature.json picks the active feature; override beats it; a missing dir or bad JSON falls back to newest', () => {
+  const dirs = [{ name: '001-a', mtimeMs: 9 }, { name: '006-b', mtimeMs: 1 }]
+  expect(featureFromJson('{"feature_directory": "specs/006-b/"}')).toBe('006-b')
+  expect(pickFeature(dirs, undefined, '006-b')).toBe('006-b')
+  expect(pickFeature(dirs, '001-a', '006-b')).toBe('001-a')
+  expect(pickFeature(dirs, undefined, '009-gone')).toBe('001-a')
+  expect(featureFromJson('not json')).toBe(undefined)
+  expect(featureFromJson('{}')).toBe(undefined)
+  expect(featureFromJson(undefined)).toBe(undefined)
 })
 
 test('only metadata: items never carry file contents', () => {
