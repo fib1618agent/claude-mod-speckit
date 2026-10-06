@@ -1,6 +1,6 @@
 # SDD Navigator (`sdd-navigator`)
 
-The Navigator is the user interface shell for the SDD Mods. `/sdd [view]` opens a pane with a navigation row, a slot that embeds the views drawn by the other Mods, Back and Close controls, and the single status line that shows the current phase. It contains no business logic. If an embedded view fails to appear it falls back to showing one pane at a time. Hotkeys work only while the pane has focus: `1`–`9`, `0` and `p` open views, `b` goes back, `Esc` closes.
+The Navigator is the user interface shell for the SDD Mods. `/sdd [view]` opens a pane with a navigation row, a slot that embeds the views drawn by the other Mods, Back and Close controls, and the single status line that shows the current phase. It contains no business logic. If an embedded view fails to appear it falls back to showing one pane at a time. `/sdd close` closes it from the prompt. Keys and buttons work only while the pane has focus (press `ctrl+x` then `Tab`; `Tab`, the arrows and `Enter` also work; clicks need a terminal that delivers them). Hotkeys: `1`–`9`, `0` and `p` open views, `b` goes back, `Esc` closes.
 
 **Reads:** the optional `navigator` section of `.speckit/mod/config.yaml` (display mode), and the phase, convergence and control state published by the other SDD Mods.
 

@@ -19,6 +19,11 @@ export const NAV: NavEntry[] = [
 export const RESERVED_HOTKEYS = [...NAV.map(n => n.key), 'b']
 
 const ALIASES: Record<string, SddViewId> = { status: 'phase', pack: 'prompts', packs: 'prompts', catalog: 'prompts', convergence: 'converge', traceability: 'trace', artifact: 'artifacts', gate: 'quality' }
+// `/sdd close` closes the pane (the only close route without pane focus, since clicks need a terminal that delivers them).
+export function isCloseArg(arg: string): boolean {
+  return arg.trim().toLowerCase() === 'close'
+}
+
 export function parseView(arg: string): SddViewId | undefined {
   const a = arg.trim().toLowerCase()
   return NAV.find(n => n.id === a || n.key === a)?.id ?? ALIASES[a]

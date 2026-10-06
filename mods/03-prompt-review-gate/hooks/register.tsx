@@ -183,7 +183,7 @@ export const register: Register = on => {
       pending.composed = ensureHeader(edit.body, pending.phase)
       pending.edited = true
       await publish($, { phase: pending.phase, promptHash: fingerprint(pending.composed), state: 'pending', requestId: pending.requestId, path: pending.path, edited: true })
-      return { drop: 'Edited copy captured, not sent. Press Run in ③ Review (or /sdd-review run) to run it after review.' }
+      return { drop: 'Edited copy captured, not sent. Keys are going to the composer, so focus the pane first with ctrl+x then Tab, then press Run in ③ Review; or use /sdd-review run. /sdd close closes the pane.' }
     }
     const set = await settings($)
     const hit = set.enabled ? phaseOfText(e.text, set.phases) : undefined
