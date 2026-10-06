@@ -39,6 +39,8 @@ export function isHuman(origin: { kind?: string } | undefined): boolean {
   return origin?.kind === 'composer' || origin?.kind === 'bridge'
 }
 
-export function preview(text: string, max = 1200): string {
-  return text.length <= max ? text : text.slice(0, max) + `\n… [${text.length - max} more characters; use Edit to see all]`
+// Display only: blank lines are collapsed so a short pane still shows the actions below the preview. Edit shows the full text.
+export function preview(text: string, max = 400): string {
+  const t = text.replace(/[ \t]+$/gm, '').replace(/\n{2,}/g, '\n').trim()
+  return t.length <= max ? t : t.slice(0, max) + `\n… [${t.length - max} more characters; use Edit to see all]`
 }

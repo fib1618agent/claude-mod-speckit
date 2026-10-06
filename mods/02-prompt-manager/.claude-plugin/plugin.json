@@ -1,6 +1,6 @@
 {
   "name": "sdd-prompt-manager",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "SDD capability 02: prompt templates, layer composition, prompt resolution, template edit/save/reset and the Prompt Pack catalog.",
   "author": {
     "name": "fib1618agent",

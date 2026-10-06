@@ -230,11 +230,11 @@ export const register: Register = on => {
         {p.ready && <Text>{`Template ${p.templateId} v${p.version} · ${p.access === 'read-only' ? 'READ-ONLY phase' : p.access === 'modifies-files' ? 'MAY MODIFY FILES' : 'access unknown'} · ${p.composed.length} chars${p.edited ? ' · EDITED' : ''}`}</Text>}
         <Text>{`Quality gate: ${gate ? gate.display : 'no gate evidence'}`}</Text>
         {blocked && <Text>{`Run blocked — ${blocked}`}</Text>}
-        {p.ready && <Text dimColor>{preview(p.composed, 900)}</Text>}
         {p.ready && !blocked && <Button key="review-run" label="Run" hotkey="r" variant="primary" onPress={async () => { $.ui.toast(await approveRun($)) }} />}
         <Button key="review-edit" label="Edit Prompt" hotkey="e" onPress={async () => { $.ui.toast(await editCopy($)) }} />
         <Button key="review-cancel" label="Cancel" hotkey="c" onPress={async () => { $.ui.toast(await cancelReview($)) }} />
         <Button key="review-save" label="Save Template" hotkey="s" onPress={async () => { $.ui.toast(await saveTemplate($)) }} />
+        {p.ready && <Text dimColor>{preview(p.composed, 400)}</Text>}
       </Box>
     )
   })

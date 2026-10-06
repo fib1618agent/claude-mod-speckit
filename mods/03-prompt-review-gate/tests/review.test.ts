@@ -1,5 +1,5 @@
 import { test, expect, mock } from 'claude-code/testing'
-import { ensureHeader, gateBlock, isHuman, parseEditCopy, phaseOfCommand, phaseOfText } from '../hooks/lib/review'
+import { ensureHeader, gateBlock, isHuman, parseEditCopy, phaseOfCommand, phaseOfText, preview } from '../hooks/lib/review'
 
 const PHASES = ['constitution', 'specify', 'clarify', 'plan', 'checklist', 'tasks', 'analyze', 'implement', 'converge']
 
@@ -223,4 +223,12 @@ test('while an approved run executes, the same phase is not re-intercepted (no l
   expect((await $.tool.call({ tool: 'Skill', skill: 'speckit-plan', tool_use_id: 'u1' })).deny).toBeUndefined()
   await $.turn.complete({ reason: 'answer', turnId: 't', answer: '', durationMs: 1, isAborted: false })
   expect((await $.tool.call({ tool: 'Skill', skill: 'speckit-plan', tool_use_id: 'u2' })).deny).toContain('review required')
+})
+
+test('preview collapses blank lines, caps length, and points to Edit for the rest', () => {
+  expect(preview('a\n\n\n\nb   \n\nc')).toBe('a\nb\nc')
+  const p = preview('x'.repeat(1000))
+  expect(p.startsWith('x'.repeat(400))).toBe(true)
+  expect(p).toContain('600 more characters; use Edit to see all')
+  expect(preview('short')).toBe('short')
 })
