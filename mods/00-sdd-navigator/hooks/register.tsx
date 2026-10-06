@@ -1,7 +1,7 @@
 import type { Register } from 'claude-code'
 import type { SddViewId } from '../types'
 import { parseConfig, section } from './shared/config'
-import { NAV, containsView, isUnavailable, parseView, statusLine, unavailableText, type Cap } from './lib/nav'
+import { NAV, containsView, isUnavailable, isCloseArg, parseView, statusLine, unavailableText, type Cap } from './lib/nav'
 
 const VIEW = { plugin: 'sdd-navigator', key: 'view' } as const
 const CAPABILITY = { plugin: 'sdd-navigator', key: 'capability' } as const
@@ -80,12 +80,12 @@ async function openShell($: any): Promise<boolean> {
 }
 
 function helpText(): string {
-  return ['SDD Navigator — views: ' + NAV.map(n => `${n.key}=${n.id}`).join(', '), 'Use /sdd <view>. In the Navigator: 1-9, 0, p open a view; b = Back; Esc = close.', 'Text commands: /sdd-status /sdd-prompt /sdd-run /sdd-review /sdd-analyze /sdd-artifacts /sdd-quality /sdd-trace /sdd-converge /sdd-history'].join('\n')
+  return ['SDD Navigator — views: ' + NAV.map(n => `${n.key}=${n.id}`).join(', '), 'Use /sdd <view>; /sdd close closes it. Keys and buttons work while the pane has focus (ctrl+x then Tab). In the Navigator: 1-9, 0, p open a view; b = Back; Esc = close.', 'Text commands: /sdd-status /sdd-prompt /sdd-run /sdd-review /sdd-analyze /sdd-artifacts /sdd-quality /sdd-trace /sdd-converge /sdd-history'].join('\n')
 }
 
 export const register: Register = on => {
   on('session.start', async ($, e, next) => {
-    await $.command.register({ name: 'sdd', description: 'Open the SDD Navigator', argumentHint: '[phase|prompt|review|analyze|artifacts|quality|trace|converge|history|control|prompts]' })
+    await $.command.register({ name: 'sdd', description: 'Open the SDD Navigator', argumentHint: '[close|phase|prompt|review|analyze|artifacts|quality|trace|converge|history|control|prompts]' })
     await useDefaultMode($)
     await setView($, false, null)
     await $.state.set(CAPABILITY, { id: 'navigator', version: '0.1.0', status: 'ready' })
@@ -95,6 +95,10 @@ export const register: Register = on => {
 
   on('command.run', { command: 'sdd' }, async ($, e) => {
     const arg = (e.args ?? '').trim()
+    if (isCloseArg(arg)) {
+      try { await $.ui.close({ id: 'sdd' }) } catch { /* already closed */ }
+      return { text: 'SDD Navigator closed.' }
+    }
     const view = arg ? parseView(arg) : undefined
     if (arg && !view) return { text: `Unknown view "${arg}".\n${helpText()}` }
     const placed = await openShell($)

@@ -1,5 +1,5 @@
 import { test, expect, mock } from 'claude-code/testing'
-import { NAV, RESERVED_HOTKEYS, containsView, isUnavailable, parseView, statusLine, unavailableText } from '../hooks/lib/nav'
+import { NAV, RESERVED_HOTKEYS, containsView, isCloseArg, isUnavailable, parseView, statusLine, unavailableText } from '../hooks/lib/nav'
 
 test('mapping is final: 1-9, 0 and lowercase p; ⑪ is served by the Prompt Manager; keys are unique', () => {
   expect(NAV.map(n => n.key).join('')).toBe('1234567890p')
@@ -177,4 +177,10 @@ test('wide terminal: all eleven buttons share one row', async ($: any, on: any) 
 })
 test('mid-width terminal keeps the two-row nav', async ($: any, on: any) => {
   expect(await rowCount($, on, 100)).toBe(4) // 2 nav rows + wrapper + Back/Close row
+})
+
+test('close is its own argument and is not a view', () => {
+  expect(isCloseArg('close')).toBe(true); expect(isCloseArg(' Close ')).toBe(true)
+  expect(isCloseArg('')).toBe(false); expect(isCloseArg('review')).toBe(false)
+  expect(parseView('close')).toBeUndefined()
 })

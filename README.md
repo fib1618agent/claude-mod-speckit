@@ -51,7 +51,7 @@ Install all 12 for the full experience, or any subset: each Mod works alone thro
 
 ## Use
 
-1. Run `/sdd` to open the Navigator. Pick a view with `1`–`9`, `0` or `p`, press `b` to go Back and `Esc` to close. The status line shows the current phase.
+1. Run `/sdd` to open the Navigator. Pick a view with `1`–`9`, `0` or `p`, press `b` to go Back and `Esc` to close. The status line shows the current phase. Keys and buttons act only while the pane has focus: press `ctrl+x` then `Tab` (then `Tab` or the arrows and `Enter`; a click works only in terminals that deliver clicks). `/sdd close` closes the pane at any time, and every action also has a text command.
 2. Run a Spec-Kit phase as usual, for example `/speckit-plan`, or `/sdd-run plan`. The Review Gate holds it and shows the composed prompt. Choose **Edit Prompt**, **Run** or **Cancel**. Nothing runs without your approval, and unknown or unanswerable approval fails closed.
 3. Run `/sdd-analyze` for a read-only Analyze pass. Findings are grouped by severity (BLOCKER, HIGH, MEDIUM, LOW) with coverage.
 4. Check progress with `/sdd-status`, `/sdd-artifacts`, `/sdd-trace` and `/sdd-quality`. The quality gate decides Approve, Reject and Continue, and Run is blocked while a gate is `BLOCKED` or `NOT_READY`.

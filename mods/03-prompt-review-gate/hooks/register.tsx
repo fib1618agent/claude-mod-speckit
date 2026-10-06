@@ -183,7 +183,9 @@ export const register: Register = on => {
       pending.composed = ensureHeader(edit.body, pending.phase)
       pending.edited = true
       await publish($, { phase: pending.phase, promptHash: fingerprint(pending.composed), state: 'pending', requestId: pending.requestId, path: pending.path, edited: true })
-      return { drop: 'Edited copy captured, not sent. Press Run in ③ Review (or /sdd-review run) to run it after review.' }
+      // Refocus the pane (deferred: $.command.run must not run inside an awaited hook) so Run / Cancel are one key away.
+      $.clock.after(0, async () => { try { await $.command.run({ command: 'sdd', args: 'review' }) } catch { /* text commands still work */ } })
+      return { drop: 'Edited copy captured, not sent. Press Run in ③ Review (focus the pane with ctrl+x then Tab) or use /sdd-review run; /sdd close closes the pane.' }
     }
     const set = await settings($)
     const hit = set.enabled ? phaseOfText(e.text, set.phases) : undefined

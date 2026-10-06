@@ -1,6 +1,6 @@
 {
   "name": "sdd-navigator",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "SDD capability UI shell: /sdd, navigation row, view slot, Back/Close and the single status line. Contains no capability business logic.",
   "author": {
     "name": "fib1618agent",
